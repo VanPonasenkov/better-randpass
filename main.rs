@@ -1,6 +1,5 @@
 use rand::*;
 use std::env;
-use std::time::{SystemTime, UNIX_EPOCH};
 
 struct Config {
     is_numbers: bool,
@@ -16,12 +15,7 @@ fn is_yes(string: &String) -> bool {
 
 fn generate_random_password(config: Config) -> String {
     let mut password = String::new();
-    let mut rng = rand::rngs::StdRng::seed_from_u64(
-        SystemTime::now()
-            .duration_since(UNIX_EPOCH)
-            .unwrap()
-            .as_millis() as u64,
-    );
+    let mut rng = rand::rngs::StdRng::from_entropy();
     let mut chars_from = String::new();
     if config.is_numbers {
         chars_from.push_str("1234567890");
