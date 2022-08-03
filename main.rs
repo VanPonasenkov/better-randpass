@@ -1,6 +1,20 @@
 use rand::*;
 use std::env;
 
+trait AppendIf<T> {
+    fn append_if(self, appn: T, cond: bool) -> Self;
+}
+
+impl AppendIf<&'static str> for String {
+    #[inline(always)]
+    fn append_if(mut self, appn: &'static str, cond: bool) -> Self {
+        if cond {
+            self.push_str(appn);
+        }
+        return self;
+    }
+}
+
 struct Config {
     is_numbers: bool,
     is_uppercase: bool,
@@ -16,16 +30,10 @@ fn is_yes(string: &String) -> bool {
 fn generate_random_password(config: Config) -> String {
     let mut password = String::new();
     let mut rng = rand::rngs::StdRng::from_entropy();
-    let mut chars_from = String::new();
-    if config.is_numbers {
-        chars_from.push_str("1234567890");
-    }
-    if config.is_uppercase {
-        chars_from.push_str("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-    }
-    if config.is_lowercase {
-        chars_from.push_str("abcdefghijklmnopqrstuvwxyz");
-    }
+    let chars_from = String::new()
+        .append_if("1234567890", config.is_numbers)
+        .append_if("ABCDEFGHIJKLMNOPQRSTUVWXYZ", config.is_uppercase)
+        .append_if("abcdefghijklmnopqrstuvwxyz", config.is_lowercase);
     let (chars_from, chars_from_len) = (chars_from.as_bytes(), chars_from.len());
     for _ in 0..config.range {
         let idx: usize = rng.gen_range(0..chars_from_len);
