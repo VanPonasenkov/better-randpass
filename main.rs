@@ -50,10 +50,7 @@ fn main() {
         .expect("Expected 'range' argument in position 4")
         .parse::<u16>()
         .expect("'range' argument is not a number");
-
-    if args_range <= 0 {
-        panic!("Range must be greater than 0");
-    }
+    assert!(args_range > 0, "Range must be greater than 0");
 
     let config = Config {
         is_numbers: is_yes(&args_is_number),
