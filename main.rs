@@ -8,9 +8,7 @@ trait AppendIf<T> {
 impl AppendIf<&'static str> for String {
     #[inline(always)]
     fn append_if(mut self, appn: &'static str, cond: bool) -> Self {
-        if cond {
-            self.push_str(appn);
-        }
+        if cond { self.push_str(appn); }
         return self;
     }
 }
