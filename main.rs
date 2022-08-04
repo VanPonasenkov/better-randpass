@@ -44,15 +44,9 @@ fn generate_random_password(config: Config) -> String {
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    let args_is_number = args
-        .get(1)
-        .expect("Expected 'is_number' argument in position 1");
-    let args_isupper = args
-        .get(2)
-        .expect("Expected 'is_uppercase' argument in position 2");
-    let args_islower = args
-        .get(3)
-        .expect("Expected 'is_lowercase' argument in position 3");
+    let args_is_number = args.get(1).expect("Expected 'is_number' argument in position 1");
+    let args_isupper = args.get(2).expect("Expected 'is_uppercase' argument in position 2");
+    let args_islower = args.get(3).expect("Expected 'is_lowercase' argument in position 3");
     let args_range = args
         .get(4)
         .expect("Expected 'range' argument in position 4")
